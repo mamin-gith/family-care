@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="theme-color" content="#8a4fd1">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Family Care">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<link rel="icon" type="image/png" href="icons/favicon-64.png">
+<title>Family Cycle Support</title>
+<style>
+:root{--bg:#f6f2f7;--card:#fff;--tx:#241d2b;--mu:#7b7285;--ac:#8a4fd1;--bd:#ece6f0;--sh:0 4px 18px rgba(60,30,90,.07);--c1:#d7263d;--c2:#2fa58b;--c3:#e08a1e;--c4:#8d7be8;--c5:#4b2a9f;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){color-scheme:dark;--bg:#16121b;--card:#211b29;--tx:#f4eef8;--mu:#a99db5;--ac:#b98af0;--bd:#31283c;--sh:none}}
+*{box-sizing:border-box}html{height:100%}
+body{margin:0;min-height:100%;background:var(--bg);color:var(--tx);font:16px/1.5 system-ui,-apple-system,"Segoe UI",Tahoma,sans-serif}
+main{max-width:560px;margin:0 auto;padding:14px 14px 100px}
+.card{background:var(--card);border:1px solid var(--bd);border-radius:20px;padding:16px;margin-bottom:14px;box-shadow:var(--sh)}
+h1{font-size:19px;margin:0}h2{font-size:16px;margin:0 0 8px}h3{font-size:13px;margin:0 0 6px;color:var(--mu)}
+.row{display:flex;gap:8px;align-items:center;flex-wrap:wrap}.sp{justify-content:space-between}
+button,select,input,textarea{font:inherit;color:var(--tx);background:var(--bg);border:1px solid var(--bd);border-radius:12px;padding:10px 14px;max-width:100%}
+button{cursor:pointer}button.p{background:var(--ac);color:#fff;border-color:var(--ac);font-weight:600}button.g{border:0;background:none;color:var(--mu)}
+input,textarea{width:100%}label{display:block;font-size:13px;color:var(--mu);margin:8px 0 3px}
+.nav{position:fixed;inset-inline:0;bottom:0;display:flex;background:var(--card);border-top:1px solid var(--bd);padding:6px 6px calc(6px + env(safe-area-inset-bottom,0px))}
+.nav button{flex:1;border:0;background:none;display:flex;flex-direction:column;align-items:center;gap:0;font-size:11px;color:var(--mu);padding:4px 2px}.nav button span{font-size:22px}.nav .on{color:var(--ac);font-weight:700}
+.chips{display:flex;gap:8px;overflow-x:auto;padding:2px 0 14px}.chip{display:flex;align-items:center;gap:8px;padding-block:5px;padding-inline:5px 14px;border-radius:999px;white-space:nowrap;background:var(--card)}
+.ava{width:30px;height:30px;border-radius:50%;color:#fff;display:inline-grid;place-items:center;font-size:14px;font-weight:700;flex:none}
+.chip.on{background:var(--ac);color:#fff;border-color:var(--ac)}
+.hero{color:#fff;border:0;display:flex;gap:16px;align-items:center}.hero .ph{font-size:22px;font-weight:700;line-height:1.25;margin:0 0 4px}.hero .sub{font-size:14px;opacity:.92}.hero .who{font-size:13px;opacity:.85}
+.pills{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}.pill{background:rgba(255,255,255,.2);border-radius:999px;padding:3px 10px;font-size:12px}
+.duo{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;margin-bottom:14px}.duo .card{margin:0}.duo p{margin:0}
+.empty{text-align:center;padding:30px 16px}.empty p{margin:8px 0 14px}
+.mu{color:var(--mu);font-size:14px}ul{margin:6px 0;padding-inline-start:20px}li{margin:4px 0}
+.ban{background:#fdecef;color:#7a2b43;border-radius:14px;padding:10px 14px;margin-bottom:10px;font-size:14px}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]) .ban{background:#3b2229;color:#f3c9d6}}
+.lock{max-width:340px;margin:12vh auto;text-align:center}.lock input{text-align:center;font-size:22px;letter-spacing:8px;margin:10px 0}
+.err{color:var(--c1);font-size:14px;min-height:20px}
+table{width:100%;border-collapse:collapse;font-size:14px}td{padding:6px 2px;border-bottom:1px solid var(--bd)}
+.band{display:flex;height:26px;border-radius:13px;overflow:hidden}.band i{display:block}
+.who2{font-size:13px;font-weight:600;margin:12px 0 5px}.ax{position:relative;height:24px;font-size:11px;color:var(--mu)}.ax span{position:absolute;white-space:nowrap}
+.lgs{display:flex;flex-wrap:wrap;gap:4px 12px;font-size:12px;color:var(--mu);margin-top:12px}.lgd{display:flex;align-items:center;gap:5px}.lgd b{width:9px;height:9px;border-radius:50%;display:inline-block}
+.win{display:flex;gap:14px;align-items:center;padding:10px 14px;border-radius:14px;background:var(--bg);margin-top:10px;border-inline-start:6px solid}
+.win .n{font-size:24px;font-weight:700;text-align:center;min-width:44px;line-height:1}.win .n small{display:block;font-size:10px;font-weight:400;color:var(--mu);margin-top:2px}.win .mu{font-size:13px}
+.fr{display:grid;grid-template-columns:92px 1fr;gap:10px;align-items:center;padding:10px 0}.fr+.fr{border-top:1px solid var(--bd)}.fl{font-size:13px;color:var(--mu)}
+.eb{display:flex;align-items:center;gap:10px}.seg{display:flex;gap:4px;flex:1}.seg i{flex:1;height:10px;border-radius:5px}.eb b{font-size:14px;min-width:60px}
+.md{display:flex;align-items:center;gap:10px;font-size:14px}.em{font-size:32px;line-height:1}
+.chp{display:flex;flex-wrap:wrap;gap:6px}.cp{background:var(--bg);border:1px solid var(--bd);border-radius:999px;padding:3px 10px;font-size:13px}
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px}.tile{background:var(--bg);border-radius:14px;padding:12px;font-size:14px;display:flex;flex-direction:column;gap:6px}.tile span{font-size:26px;line-height:1}
+
+.toast{position:fixed;top:calc(12px + env(safe-area-inset-top,0px));inset-inline:14px;margin:0 auto;max-width:520px;background:var(--ac);color:#fff;padding:12px 16px;border-radius:14px;box-shadow:0 6px 24px rgba(0,0,0,.25);z-index:50;text-align:center;font-weight:600}
+
+:root{--hi:rgba(255,255,255,.85);--sh1:rgba(70,40,110,.16);--sh2:rgba(70,40,110,.08);--card2:#f3edf7}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--hi:rgba(255,255,255,.07);--sh1:rgba(0,0,0,.55);--sh2:rgba(0,0,0,.3);--card2:#1b1523}}
+body{background:radial-gradient(900px 500px at 8% -8%,rgba(176,126,230,.26),transparent 60%),radial-gradient(800px 500px at 108% 8%,rgba(240,150,180,.22),transparent 60%),var(--bg);background-attachment:fixed}
+main{padding-bottom:124px}
+.card{background:linear-gradient(145deg,var(--card),var(--card2));border:1px solid var(--hi);box-shadow:inset 0 1px 0 var(--hi),0 16px 30px -12px var(--sh1),0 3px 6px var(--sh2)}
+button{background:linear-gradient(180deg,var(--card),var(--card2));box-shadow:inset 0 1px 0 var(--hi),0 3px 0 var(--bd),0 8px 14px -6px var(--sh1);transition:transform .12s,box-shadow .12s}
+button:active{transform:translateY(2px);box-shadow:inset 0 1px 0 var(--hi),0 1px 0 var(--bd),0 2px 6px -3px var(--sh1)}
+button.g{background:none;box-shadow:none}
+button.p{background:linear-gradient(180deg,#a67be8,#7b43c9);border-color:#6a35b5;color:#fff;box-shadow:inset 0 1px 0 rgba(255,255,255,.4),0 4px 0 #55289a,0 10px 16px -8px rgba(90,40,160,.35)}
+button.p:active{transform:translateY(3px);box-shadow:inset 0 1px 0 rgba(255,255,255,.3),0 1px 0 #55289a,0 3px 8px -3px rgba(90,40,160,.4)}
+input,textarea{background:var(--card2);box-shadow:inset 0 2px 5px var(--sh1)}
+.nav{inset-inline:12px;max-width:536px;margin-inline:auto;bottom:calc(10px + env(safe-area-inset-bottom,0px));border-radius:28px;border:1px solid var(--hi);padding:6px;background:linear-gradient(145deg,var(--card),var(--card2));box-shadow:inset 0 1px 0 var(--hi),0 20px 38px -8px var(--sh1),0 4px 10px var(--sh2)}
+.nav button{background:none;box-shadow:none;border-radius:20px;transition:none}.nav button:active{transform:none}
+.nav .on{background:linear-gradient(180deg,var(--ac),color-mix(in srgb,var(--ac) 68%,#000));color:#fff;box-shadow:inset 0 1px 0 rgba(255,255,255,.4),0 4px 8px -5px var(--ac)}
+.hero{--hc:#888;position:relative;overflow:hidden;box-shadow:inset 0 2px 0 rgba(255,255,255,.28),inset 0 -12px 20px rgba(0,0,0,.16),0 16px 28px -16px color-mix(in srgb,var(--hc) 50%,transparent),0 6px 10px rgba(0,0,0,.14)}
+.hero>*{position:relative}.hero::before{content:"";position:absolute;inset:0 0 50% 0;background:linear-gradient(180deg,rgba(255,255,255,.18),rgba(255,255,255,0));pointer-events:none}
+.hero svg{filter:drop-shadow(0 6px 8px rgba(0,0,0,.32))}
+.chip{box-shadow:inset 0 1px 0 var(--hi),0 3px 0 var(--bd),0 8px 12px -6px var(--sh1)}
+.chip.on{background:linear-gradient(180deg,#8a4fd1,#a67be8);box-shadow:inset 0 3px 6px rgba(0,0,0,.32)}
+.ava,.lgd b{background-image:radial-gradient(circle at 32% 28%,rgba(255,255,255,.65),rgba(255,255,255,0) 62%)!important;box-shadow:0 2px 4px rgba(0,0,0,.25)}
+.band{box-shadow:inset 0 3px 6px rgba(0,0,0,.28),0 1px 0 var(--hi)}
+.band i{background-image:linear-gradient(180deg,rgba(255,255,255,.4),rgba(255,255,255,0) 55%,rgba(0,0,0,.14))!important}
+.seg i{background-image:linear-gradient(180deg,rgba(255,255,255,.45),rgba(0,0,0,.1))!important;box-shadow:0 2px 3px rgba(0,0,0,.2)}
+.tile,.win,.cp{background:linear-gradient(145deg,var(--card),var(--card2));box-shadow:inset 0 1px 0 var(--hi),0 8px 14px -8px var(--sh1)}
+.tz{cursor:pointer;display:flex;gap:12px;align-items:center}.tzi{font-size:28px}
+.cg{display:grid;grid-template-columns:repeat(7,1fr);gap:6px}.cg>span{text-align:center;font-size:11px;color:var(--mu)}
+.cd{position:relative;aspect-ratio:1;padding:0;border-radius:12px;font-size:14px;display:grid;place-items:center;background-color:var(--card);background-image:linear-gradient(180deg,rgba(255,255,255,.4),rgba(0,0,0,.07))!important;box-shadow:inset 0 1px 0 var(--hi),0 3px 0 var(--bd),0 6px 8px -5px var(--sh1)}
+.cd u{position:absolute;bottom:4px;width:5px;height:5px;border-radius:50%;background:var(--tx);opacity:.75}.cd.tdy{outline:2px solid var(--tx);outline-offset:2px;font-weight:700}
+
+.tlw{position:relative}.tlw .sep{display:block;position:absolute;top:20px;bottom:0;width:2px;transform:translateX(-50%);background:radial-gradient(circle,#fff 0,#fff 0.9px,rgba(255,255,255,0) 1.2px) 0 0/2px 6px repeat-y;-webkit-filter:drop-shadow(0 0 .6px rgba(0,0,0,.9));filter:drop-shadow(0 0 .6px rgba(0,0,0,.9));pointer-events:none;z-index:5}
+.ax span{padding-inline-start:5px}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--c4:#a395f2;--c5:#7a58e0}}
+.priv main,.priv .nav{filter:blur(22px)}
+</style>
+</head>
+<body>
+<main id="app"></main>
+<script>
+const T={en:{app:"Family Cycle Support",lang:"العربية",setPin:"Create a PIN to protect this app",pin:"PIN (4–8 digits)",pin2:"Confirm PIN",enter:"Enter PIN",go:"Continue",bad:"Wrong PIN",mism:"PINs don’t match or too short",dash:"Family timeline · next 6 weeks",best:"Best windows for a trip or outing",noWin:"No window of 2+ days that suits plans in the next 6 weeks.",allOk:"Everyone energetic",lessFor:"Less ideal for:",bk:"Backup",bkNote:"Export your data to a file and keep it somewhere safe (cloud storage, or email it to yourself). The file is not encrypted and does not include your PIN.",exp:"Export file",cpy:"Copy backup text",restFile:"Restore from a backup file",restTxt:"Or paste backup text here",restGo:"Restore from text",okRestore:"Backup restored",badFile:"Invalid backup file",confirmRest:"Replace current data with this backup?",last:"Last backup",never:"never",bkWarn:"No backup in the last 30 days. Tap to back up.",unav:"File saving isn’t available here. Use Copy backup text.",copied:"Copied ✓",sel:"Select the text above and copy it manually.",done:"Saved ✓",reading:"Reading file:",noFile:"No file selected",noStore:"This browser is not saving data for this page, so your PIN and data will be lost when you close it. Use the installed app version instead (see the hosting guide).",pinNote:"If you are asked to create a PIN every time you open this page, your phone is not keeping the data. Use the installed app version.",avoidT:"Better to avoid",avoidWho:"In period/PMS:",noAvoid:"No unsuitable stretches of 2+ days in the next 6 weeks.",longP:"Her logged periods last more than 7 days. If this is typical for her, it is worth mentioning to a doctor.",notifT:"🌸 Reminder",notifB:"Open the app to see today’s reminder.",wait:"Too many attempts. Try again in",sec:"s",plan:"Plan",nextWin:"Next good window",noWinS:"No shared good window in the next 6 weeks. Tap to plan.",calT:"Calendar",fam:"Family",plog:"Logged period",nodata:"No data",lE:"Energy",lM:"Mood",lB:"Body",fv:{menstrual:{e:1,ew:"Low",m:"🥺",mw:"Inward and sensitive",b:[["🤕","Cramps"],["🔙","Back pain"],["🎈","Bloating"],["😣","Headache"]]},follicular:{e:4,ew:"Rising",m:"😊",mw:"Upbeat, motivated, sociable",b:[["🌿","Lighter"],["😌","Comfortable"]]},ovulatory:{e:5,ew:"Peak",m:"😎",mw:"Confident and outgoing",b:[["⚡","Mild one-sided twinge (some)"],["💪","Feels strong"]]},luteal:{e:3,ew:"Settling",m:"😌",mw:"Calm and routine-focused; patience may shorten",b:[["🍫","Appetite up"],["🎈","Early bloating"]]},pms:{e:2,ew:"Tired",m:"😤",mw:"Irritable, anxious, tearful",b:[["🎈","Bloating"],["😣","Headache"],["🍫","Cravings"],["😴","Poor sleep"]]}},feel:"How she may feel",f:{menstrual:["Energy: low; tires easily.","Body: cramps, back pain, headache or bloating are common.","Mood: more inward and sensitive; needs rest."],follicular:["Energy: rising day by day.","Mood: upbeat, motivated and more sociable.","Body: usually feels lighter and more comfortable."],ovulatory:["Energy: at its peak.","Mood: confident, outgoing and talkative.","Body: some feel mild one-sided pain or tenderness."],luteal:["Energy: gradually settling down.","Mood: calmer and routine-focused; patience may shorten later.","Body: appetite may rise; early bloating or breast tenderness for some."],pms:["Mood: irritable, anxious, tearful or easily overwhelmed.","Energy: tired, poor sleep, low tolerance for noise and demands.","Body: bloating, breast tenderness, headache, cravings."]},prev:"Backup contents",pers:"periods logged",replaces:"Restoring replaces all current data.",restNow:"Restore now",cancel:"Cancel",ppl:"people",staged:"Backup read. Review and confirm below.",sure:"Tap again to delete",sureRest:"Tap again to restore (replaces current data)",most:"Half or more energetic",mostT:"Wider windows (over half energetic, includes the above):",caut:"Unsuitable: someone in period/PMS and half or more not energetic",mixed:"Calm (low-key plans): no one in period or PMS",far:"Later weeks are less certain; they sharpen as you log more cycles.",miss:"Some people are not shown because no period is logged yet.",home:"Today",log:"Log",people:"People",set:"Settings",none:"Add a person in the People tab to start.",nolog:"Log her latest period start in the Log tab.",day:"Day",of:"of",next:"Next period in",days:"days",late:"Period is late by",expd:"Expected",cl:"Avg cycle",pl:"Avg period",dflt:"default until 2+ logged periods",tips:"Support now",say:"Say",avoid:"Avoid",name:"Name",dob:"Birth date",add:"Add",del:"Delete",start:"Period start",end:"Period end (optional)",save:"Save",hist:"History",age:"Age",teen:"Cycles are often irregular in the first years of periods, so predictions may be off.",peri:"Cycles often change in the late 40s, so predictions may be off.",note:"Phase effects are likely, not certain. Other causes (stress, sleep, health) matter too.",rem:"Reminders",remOn:"Enable reminders",remNote:"Notifications work only while the page is open or installed on your home screen. In-app alerts always show on the Today tab.",chgPin:"Change PIN",lockNow:"Lock now",soon:"period expected in",pmsMsg:"is entering her late luteal phase. Extra patience may help.",perMsg:"period expected within",confirmDel:"Delete this person and all data?",ph:{menstrual:"Menstrual",follicular:"Follicular",ovulatory:"Ovulatory",luteal:"Luteal",pms:"Late luteal (PMS window)"},
+d:{menstrual:["Take over some chores and errands.","Offer warmth (hot drink, heating pad) and let her rest.","Keep plans light and flexible."],follicular:["Good time for outings and shared plans.","Encourage her goals and projects.","Discuss pending matters while energy is up."],ovulatory:["Peak energy: plan quality time or an activity.","Give sincere appreciation.","Good moment for important conversations."],luteal:["Keep routines calm and predictable.","Share the workload; don’t pile on demands.","Support good sleep and meals."],pms:["Expect sensitivity; don’t take reactions personally.","Listen first; don’t fix or argue.","Postpone heated discussions; offer her favorite snack and quiet time."]},
+s:{menstrual:"“Do you need anything from me today?”",follicular:"“What would you like to do together?”",ovulatory:"“You’ve been doing great. Thank you.”",luteal:"“How can I make this week easier?”",pms:"“I’m here. Want to talk, or want space?”"},
+a:{menstrual:"Jokes about her mood or energy.",follicular:"Overloading her just because she has energy.",ovulatory:"Taking her good mood for granted.",luteal:"Criticism over small things.",pms:"“Is it your period?” or dismissing feelings."}},
+ar:{app:"دعم الدورة الشهرية للعائلة",lang:"English",setPin:"أنشئ رمزًا سريًا لحماية التطبيق",pin:"الرمز (٤–٨ أرقام)",pin2:"تأكيد الرمز",enter:"أدخل الرمز",go:"متابعة",bad:"الرمز غير صحيح",mism:"الرمزان غير متطابقين أو قصيران",dash:"الجدول الزمني للعائلة · الأسابيع الستة القادمة",best:"أفضل فترات للرحلة أو الخروج",noWin:"لا توجد فترة (يومان أو أكثر) مناسبة للخطط خلال الأسابيع الستة القادمة.",allOk:"الجميع نشيطات",lessFor:"أقل ملاءمة لـ:",bk:"النسخ الاحتياطي",bkNote:"صدّر بياناتك إلى ملف واحتفظ به في مكان آمن (تخزين سحابي أو أرسله إلى بريدك). الملف غير مشفّر ولا يتضمن الرمز السري.",exp:"تصدير ملف",cpy:"نسخ نص النسخة الاحتياطية",restFile:"استعادة من ملف نسخة احتياطية",restTxt:"أو الصق نص النسخة الاحتياطية هنا",restGo:"استعادة من النص",okRestore:"تمت استعادة النسخة",badFile:"ملف النسخة الاحتياطية غير صالح",confirmRest:"استبدال البيانات الحالية بهذه النسخة؟",last:"آخر نسخة",never:"لا يوجد",bkWarn:"لا توجد نسخة احتياطية خلال آخر 30 يومًا. اضغط للنسخ.",unav:"حفظ الملفات غير متاح هنا. استخدم نسخ النص.",copied:"تم النسخ ✓",sel:"حدّد النص أعلاه وانسخه يدويًا.",done:"تم الحفظ ✓",reading:"جارٍ قراءة الملف:",noFile:"لم يتم اختيار ملف",noStore:"هذا المتصفح لا يحفظ بيانات هذه الصفحة، لذا ستُفقد البيانات والرمز السري عند إغلاقها. استخدم نسخة التطبيق المثبّتة بدلًا من ذلك (انظر دليل الاستضافة).",pinNote:"إذا طُلب منك إنشاء رمز سري في كل مرة تفتح فيها هذه الصفحة، فهاتفك لا يحفظ البيانات. استخدم نسخة التطبيق المثبّتة.",avoidT:"الأفضل تجنّبها",avoidWho:"في الدورة أو ما قبلها:",noAvoid:"لا توجد فترات غير مناسبة (يومان أو أكثر) خلال الأسابيع الستة القادمة.",longP:"تستمر دورتها المسجلة أكثر من 7 أيام. إذا كان هذا معتادًا لديها فمن المفيد ذكره للطبيب.",notifT:"🌸 تذكير",notifB:"افتح التطبيق لعرض تذكير اليوم.",wait:"محاولات كثيرة. حاول بعد",sec:"ث",plan:"التخطيط",nextWin:"أقرب فترة مناسبة",noWinS:"لا توجد فترة مناسبة مشتركة خلال 6 أسابيع. اضغط للتخطيط.",calT:"التقويم",fam:"العائلة",plog:"دورة مسجلة",nodata:"لا توجد بيانات",lE:"الطاقة",lM:"المزاج",lB:"الجسم",fv:{menstrual:{e:1,ew:"منخفضة",m:"🥺",mw:"منطوية وحساسة",b:[["🤕","مغص"],["🔙","ألم الظهر"],["🎈","انتفاخ"],["😣","صداع"]]},follicular:{e:4,ew:"في ارتفاع",m:"😊",mw:"متفائلة ومتحمسة واجتماعية",b:[["🌿","خفة"],["😌","راحة"]]},ovulatory:{e:5,ew:"الذروة",m:"😎",mw:"واثقة ومنفتحة",b:[["⚡","وخز خفيف في جانب (عند بعضهن)"],["💪","شعور بالقوة"]]},luteal:{e:3,ew:"تهدأ",m:"😌",mw:"هادئة ومنشغلة بالروتين، وقد يقل صبرها",b:[["🍫","زيادة الشهية"],["🎈","انتفاخ مبكر"]]},pms:{e:2,ew:"متعبة",m:"😤",mw:"سريعة الانزعاج وقلقة وتبكي بسهولة",b:[["🎈","انتفاخ"],["😣","صداع"],["🍫","اشتهاء"],["😴","قلة نوم"]]}},feel:"كيف قد تشعر",f:{menstrual:["الطاقة: منخفضة وتتعب بسهولة.","الجسم: المغص وآلام الظهر والصداع والانتفاخ شائعة.","المزاج: أكثر انطواءً وحساسية وتحتاج إلى الراحة."],follicular:["الطاقة: ترتفع يومًا بعد يوم.","المزاج: متفائلة ومتحمسة وأكثر اجتماعية.","الجسم: تشعر عادةً بخفة وراحة."],ovulatory:["الطاقة: في ذروتها.","المزاج: واثقة ومنفتحة وتحب الحديث.","الجسم: قد تشعر بعضهن بألم خفيف أو حساسية في جانب واحد."],luteal:["الطاقة: تهدأ تدريجيًا.","المزاج: أهدأ وأكثر تركيزًا على الروتين، وقد يقل الصبر لاحقًا.","الجسم: قد تزيد الشهية، وتشعر بعضهن بانتفاخ مبكر أو حساسية في الصدر."],pms:["المزاج: سريعة الانزعاج أو القلق أو البكاء وتشعر بالإرهاق بسهولة.","الطاقة: تعب وقلة نوم وقلة تحمّل للضجيج والمطالب.","الجسم: انتفاخ وحساسية في الصدر وصداع واشتهاء أطعمة."]},prev:"محتويات النسخة الاحتياطية",pers:"دورات مسجلة",replaces:"الاستعادة تستبدل جميع البيانات الحالية.",restNow:"استعادة الآن",cancel:"إلغاء",ppl:"أشخاص",staged:"تمت قراءة النسخة. راجعها وأكّد أدناه.",sure:"اضغط مرة أخرى للحذف",sureRest:"اضغط مرة أخرى للاستعادة (تستبدل البيانات الحالية)",most:"نصفهن أو أكثر نشيطات",mostT:"فترات أوسع (أكثر من النصف نشيطات، تشمل ما سبق):",caut:"غير مناسب: إحداهن في الدورة أو ما قبلها ونصفهن أو أكثر غير نشيطات",mixed:"هادئ (للخطط الخفيفة): لا أحد في الدورة أو ما قبلها",far:"الأسابيع البعيدة أقل دقة، وتتحسن مع تسجيل المزيد من الدورات.",miss:"بعض الأشخاص غير ظاهرين لعدم تسجيل أي دورة بعد.",home:"اليوم",log:"تسجيل",people:"الأشخاص",set:"الإعدادات",none:"أضف شخصًا من تبويب الأشخاص للبدء.",nolog:"سجّل تاريخ بداية آخر دورة من تبويب تسجيل.",day:"اليوم",of:"من",next:"الدورة القادمة بعد",days:"يوم",late:"الدورة متأخرة بمقدار",expd:"المتوقع",cl:"متوسط الدورة",pl:"متوسط مدة الحيض",dflt:"افتراضي حتى تسجيل دورتين أو أكثر",tips:"الدعم المطلوب الآن",say:"قل",avoid:"تجنّب",name:"الاسم",dob:"تاريخ الميلاد",add:"إضافة",del:"حذف",start:"بداية الدورة",end:"نهاية الدورة (اختياري)",save:"حفظ",hist:"السجل",age:"العمر",teen:"الدورات غالبًا غير منتظمة في السنوات الأولى، لذا قد تقل دقة التوقعات.",peri:"تتغير الدورات غالبًا في أواخر الأربعينات، لذا قد تقل دقة التوقعات.",note:"تأثير المراحل محتمل وليس مؤكدًا. للتوتر والنوم والصحة دور أيضًا.",rem:"التذكيرات",remOn:"تفعيل التذكيرات",remNote:"الإشعارات تعمل فقط أثناء فتح الصفحة أو عند تثبيتها على الشاشة الرئيسية. تظهر التنبيهات داخل التطبيق دائمًا في تبويب اليوم.",chgPin:"تغيير الرمز",lockNow:"قفل الآن",soon:"الدورة متوقعة خلال",pmsMsg:"تدخل مرحلة ما قبل الدورة (الأشد حساسية). قد يفيد مزيد من الصبر.",perMsg:"الدورة متوقعة خلال",confirmDel:"حذف هذا الشخص وكل بياناته؟",ph:{menstrual:"الحيض (أيام الدورة)",follicular:"الجريبية (بعد الدورة)",ovulatory:"الإباضة (فترة الخصوبة)",luteal:"الجسم الأصفر (قبل الدورة)",pms:"أواخر الجسم الأصفر (أيام التوتر قبل الدورة)"},
+d:{menstrual:["تولَّ بعض المهام المنزلية والمشاوير.","وفّر الدفء (مشروب ساخن، وسادة تدفئة) ودعها ترتاح.","اجعل الخطط خفيفة ومرنة."],follicular:["وقت مناسب للخروج والخطط المشتركة.","شجّع أهدافها ومشاريعها.","ناقش الأمور المؤجلة وطاقتها مرتفعة."],ovulatory:["ذروة النشاط: خطط لوقت مميز أو نشاط معًا.","عبّر عن تقدير صادق.","وقت جيد للحوارات المهمة."],luteal:["حافظ على روتين هادئ ومتوقع.","شاركها الأعباء ولا تضف مطالب كثيرة.","ادعم نومها ووجباتها."],pms:["توقّع حساسية أكبر ولا تأخذ ردود الفعل بشكل شخصي.","استمع أولًا ولا تحاول الحل أو الجدال.","أجّل النقاشات الحادة، وقدّم وجبتها المفضلة ووقتًا هادئًا."]},
+s:{menstrual:"«هل تحتاجين شيئًا مني اليوم؟»",follicular:"«ماذا تحبين أن نفعل معًا؟»",ovulatory:"«أنتِ رائعة، شكرًا لك.»",luteal:"«كيف أجعل هذا الأسبوع أسهل عليك؟»",pms:"«أنا بجانبك. تحبين أن نتحدث أم تريدين مساحة؟»"},
+a:{menstrual:"المزاح عن مزاجها أو طاقتها.",follicular:"تحميلها فوق طاقتها لأنها نشيطة.",ovulatory:"اعتبار مزاجها الجيد أمرًا مسلّمًا.",luteal:"الانتقاد على أمور صغيرة.",pms:"«هل هي دورتك؟» أو التقليل من مشاعرها."}}};
+const COL={menstrual:"var(--c1)",follicular:"var(--c2)",ovulatory:"var(--c3)",luteal:"var(--c4)",pms:"var(--c5)"};
+let S={lang:"en",pin:null,remind:false,sel:null,people:[],notified:{}},tab="home",unlocked=false,mem=null;
+let storeOK=true;try{localStorage.setItem("fcs_t","1");localStorage.removeItem("fcs_t")}catch(e){storeOK=false}
+const load=()=>{try{const r=localStorage.getItem("fcs");if(r)S=Object.assign(S,JSON.parse(r))}catch(e){if(mem)S=mem}};
+const save=()=>{mem=S;try{localStorage.setItem("fcs",JSON.stringify(S))}catch(e){}};
+const t=()=>T[S.lang],$=s=>document.querySelector(s);
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const todayISO=()=>new Date().toLocaleDateString("en-CA");
+const diff=(a,b)=>Math.round((Date.parse(b)-Date.parse(a))/864e5);
+const addD=(i,n)=>new Date(Date.parse(i)+n*864e5).toISOString().slice(0,10);
+const avg=a=>a.reduce((x,y)=>x+y,0)/a.length;
+const OC=["#d64545","#3d93d6","#8bc34a","#0f8a4f"],OT=["#fff","#fff","#1b2a06","#fff"];
+function lvl(a){const n=a.length,g=a.filter(z=>z==="follicular"||z==="ovulatory").length,b=a.filter(z=>z==="menstrual"||z==="pms").length;return g===n?3:(b>0&&g/n<=.5)?0:g/n>=.5?2:1}
+const ovOf=(cl,pe)=>Math.min(Math.max(cl-14,pe+4),cl-6);
+const hash=p=>{let h=5381;const s="fcs|"+p;for(let i=0;i<s.length;i++)h=((h<<5)+h+s.charCodeAt(i))>>>0;return String(h)};
+const nf=n=>S.lang==="ar"?String(n).replace(/\d/g,d=>"٠١٢٣٤٥٦٧٨٩"[d]):n;
+function calc(p){
+  const ps=[...p.periods].sort((a,b)=>a.s<b.s?-1:1);if(!ps.length)return null;
+  const td=todayISO(),gaps=[];for(let i=1;i<ps.length;i++)gaps.push(diff(ps[i-1].s,ps[i].s));
+  const real=gaps.length>0,cl=real?Math.min(45,Math.max(21,Math.round(avg(gaps.slice(-6)))) ):28;
+  const lens=ps.filter(x=>x.e).map(x=>diff(x.s,x.e)+1).filter(n=>n>0&&n<=12),pl=lens.length?Math.round(avg(lens)):5;
+  const last=ps[ps.length-1],day=diff(last.s,td)+1;if(day<1)return null;
+  const plE=last.e?diff(last.s,last.e)+1:pl,ov=ovOf(cl,plE);let ph;
+  if(day<=plE)ph="menstrual";else if(day<ov-1)ph="follicular";else if(day<=ov+1)ph="ovulatory";else if(day>cl-5)ph="pms";else ph="luteal";
+  const next=addD(last.s,cl);return{ph,day,cl,pl,real,next,to:diff(td,next),plE,ov,ps}}
+const age=d=>d?Math.floor((Date.now()-Date.parse(d))/31557600000):null;
+function chips(){return `<div class="chips">${S.people.map(p=>{const c=calc(p);return `<button class="chip ${p.id===S.sel?"on":""}" data-pick="${p.id}"><b class="ava" style="background:${c?COL[c.ph]:"var(--mu)"}">${esc([...p.name][0]||"?")}</b>${esc(p.name)}</button>`}).join("")}</div>`}
+function render(){
+  const a=$("#app");document.documentElement.lang=S.lang;document.documentElement.dir=S.lang==="ar"?"rtl":"ltr";document.title=t().app;
+  if(!S.pin||(chgPin&&unlocked))return lockUI(a,true);if(!unlocked)return lockUI(a,false);
+  const nv=[["home","🏠"],["plan","🗓️"],["log","📝"],["people","👥"],["set","⚙️"]].map(([k,i])=>`<button class="${tab===k?"on":""}" data-tab="${k}"><span>${i}</span>${t()[k]}</button>`).join("");
+  a.innerHTML=`<div class="row sp" style="margin-bottom:12px"><h1>🌸 ${t().app}</h1><button class="g" id="lg">${t().lang}</button></div>${tab==="log"&&S.people.length?chips():""}<div id="v"></div><nav class="nav">${nv}</nav>`;
+  ({home:home,plan:planV,log:logV,people:peopleV,set:setV})[tab]();bind()}
+let chgPin=false;
+const hx=b=>[...new Uint8Array(b)].map(x=>x.toString(16).padStart(2,"0")).join("");
+const subtle=()=>window.crypto&&window.crypto.subtle;
+async function kdf(p,sh){const salt=new Uint8Array(sh.match(/../g).map(h=>parseInt(h,16))),k=await crypto.subtle.importKey("raw",new TextEncoder().encode(p),"PBKDF2",false,["deriveBits"]);return hx(await crypto.subtle.deriveBits({name:"PBKDF2",salt,iterations:200000,hash:"SHA-256"},k,256))}
+async function mkPin(p){if(!subtle())return hash(p);const s=hx(crypto.getRandomValues(new Uint8Array(16)));return{v:2,s,h:await kdf(p,s)}}
+async function chkPin(p){if(typeof S.pin==="string"){const ok=hash(p)===S.pin;if(ok&&subtle())S.pin=await mkPin(p);return ok}return !!S.pin&&S.pin.v===2&&(await kdf(p,S.pin.s))===S.pin.h}
+const DRE=/^\d{4}-\d{2}-\d{2}$/;
+function cleanPeople(a){return(Array.isArray(a)?a:[]).filter(p=>p&&typeof p==="object"&&p.name!=null&&Array.isArray(p.periods)).slice(0,50).map((p,i)=>({id:/^[A-Za-z0-9_-]{1,40}$/.test(String(p.id))?String(p.id):"p"+i+Date.now().toString(36),name:String(p.name).slice(0,60),dob:DRE.test(p.dob||"")?p.dob:"",periods:p.periods.slice(0,600).filter(x=>x&&DRE.test(x.s)).map(x=>({s:x.s,e:DRE.test(x.e||"")&&x.e>=x.s?x.e:""}))}))}
+function lockUI(a,setup){
+  a.innerHTML=`<div class="card lock"><h1>${t().app}</h1><p>${setup?t().setPin:t().enter}</p>${!storeOK?`<div class="ban">⚠ ${t().noStore}</div>`:setup&&!chgPin?`<div class="mu" style="margin-bottom:6px">${t().pinNote}</div>`:""}<input id="p1" type="password" inputmode="numeric" autocomplete="off" placeholder="${t().pin}">${setup?`<input id="p2" type="password" inputmode="numeric" autocomplete="off" placeholder="${t().pin2}">`:""}<div class="err" id="er"></div><button class="p" id="ok">${t().go}</button> ${chgPin&&unlocked?`<button id="cx">${t().cancel}</button> `:""}<button class="g" id="lg">${t().lang}</button></div>`;
+  $("#lg").onclick=()=>{S.lang=S.lang==="en"?"ar":"en";save();render()};
+  const go=async()=>{const p=$("#p1").value,er=$("#er");
+    if(setup){if(!/^\d{4,8}$/.test(p)||p!==$("#p2").value)return er.textContent=t().mism;S.pin=await mkPin(p);S.fails=0;S.lockUntil=0;chgPin=false;save();unlocked=true;render();check();return}
+    const w=Math.ceil(((S.lockUntil||0)-Date.now())/1000);if(w>0)return er.textContent=`${t().wait} ${nf(w)} ${t().sec}`;
+    if(await chkPin(p)){S.fails=0;S.lockUntil=0;save();unlocked=true;render();check()}
+    else{S.fails=(S.fails||0)+1;const d=S.fails>=3?Math.min(300,5*2**(S.fails-3)):0;S.lockUntil=d?Date.now()+d*1000:0;save();er.textContent=d?`${t().bad} · ${t().wait} ${nf(d)} ${t().sec}`:t().bad;$("#p1").value=""}
+  };
+  $("#ok").onclick=go;const cx=$("#cx");if(cx)cx.onclick=()=>{chgPin=false;render()};a.querySelectorAll("input").forEach(i=>i.onkeydown=e=>{if(e.key==="Enter")go()})}
+const EM={menstrual:["🧺","☕","🗓️"],follicular:["🚶","🎯","💬"],ovulatory:["✨","💐","🗣️"],luteal:["🏡","🤝","🍽️"],pms:["💛","👂","🍫"]};
+function home(){
+  const v=$("#v"),h=banners()+teaser(),p=S.people.find(x=>x.id===S.sel);
+  if(!S.people.length)return v.innerHTML=h+`<div class="card empty"><div style="font-size:44px">🌸</div><p>${t().none}</p><button class="p" data-tab="people">${t().people}</button></div>`;
+  const c=p&&calc(p),ch=chips();
+  if(!c)return v.innerHTML=h+ch+`<div class="card empty"><div style="font-size:44px">🗓️</div><p>${t().nolog}</p><button class="p" data-tab="log">${t().log}</button></div>`;
+  const fv=t().fv[c.ph],ag=age(p.dob),warn=(ag!=null&&ag<18?t().teen:ag>=45?t().peri:"")+(c.pl>7?" "+t().longP:""),col=COL[c.ph],late=c.to<0,C=263.9,pr=Math.min(1,c.day/c.cl);
+  const nx=late?`${t().late} ${nf(-c.to)} ${t().days}`:`${t().next} ${nf(c.to)} ${t().days}`;
+  v.innerHTML=h+ch+`<div class="card hero" style="--hc:${col};background:linear-gradient(135deg,${col},color-mix(in srgb,${col} 60%,#000))">
+  <svg viewBox="0 0 100 100" width="108" height="108" style="flex:none"><circle cx="50" cy="50" r="42" fill="none" stroke="rgba(255,255,255,.28)" stroke-width="9"/><circle cx="50" cy="50" r="42" fill="none" stroke="#fff" stroke-width="9" stroke-linecap="round" stroke-dasharray="${C*pr} ${C}" transform="rotate(-90 50 50)"/><text x="50" y="52" text-anchor="middle" fill="#fff" font-size="27" font-weight="700">${nf(c.day)}</text><text x="50" y="67" text-anchor="middle" fill="#fff" font-size="9" opacity=".9">${t().day} / ${nf(c.cl)}</text></svg>
+  <div><div class="who">${esc(p.name)}${ag!=null?` · ${t().age} ${nf(ag)}`:""}</div><div class="ph">${t().ph[c.ph]}</div><div class="sub">${nx}</div>
+  <div class="pills"><span class="pill">${t().cl}: ${nf(c.cl)}${c.real?"":" *"}</span><span class="pill">${t().pl}: ${nf(c.pl)}</span><span class="pill">${t().expd}: ${c.next}</span></div></div></div>
+  <div class="card" style="border-inline-start:5px solid ${col}"><h2>💭 ${t().feel}</h2>
+  <div class="fr"><span class="fl">⚡ ${t().lE}</span><div class="eb"><div class="seg">${[1,2,3,4,5].map(i=>`<i style="background:${i<=fv.e?col:"var(--bd)"}"></i>`).join("")}</div><b>${fv.ew}</b></div></div>
+  <div class="fr"><span class="fl">🙂 ${t().lM}</span><div class="md"><span class="em">${fv.m}</span><span>${fv.mw}</span></div></div>
+  <div class="fr"><span class="fl">🩺 ${t().lB}</span><div class="chp">${fv.b.map(x=>`<span class="cp">${x[0]} ${x[1]}</span>`).join("")}</div></div></div>
+  <div class="card" style="border-inline-start:5px solid ${col}"><h2>💡 ${t().tips}</h2><div class="tiles">${t().d[c.ph].map((x,i)=>`<div class="tile" style="border-top:3px solid ${col}"><span>${EM[c.ph][i]}</span>${x}</div>`).join("")}</div></div>
+  <div class="duo"><div class="card"><h3>💬 ${t().say}</h3><p>${t().s[c.ph]}</p></div><div class="card"><h3>🚫 ${t().avoid}</h3><p>${t().a[c.ph]}</p></div></div>
+  ${warn?`<div class="mu" style="margin-bottom:6px">⚠ ${warn}</div>`:""}${c.real?"":`<div class="mu">* ${t().dflt}</div>`}<div class="mu">${t().note}</div>`}
+function phAt(c,iso,td){
+  const late=c.to<0,an=late?addD(td,-(c.cl-1)):c.ps[c.ps.length-1].s,d=diff(an,iso),k=Math.floor(d/c.cl),day=d%c.cl+1,pe=(k===0&&!late)?c.plE:c.pl,ov=ovOf(c.cl,pe);
+  if(day<=pe)return"menstrual";if(day<ov-1)return"follicular";if(day<=ov+1)return"ovulatory";return day>c.cl-5?"pms":"luteal"}
+function dashParts(){
+  const td=todayISO(),N=42,P=S.people.map(p=>({p,c:calc(p)})).filter(x=>x.c);
+  if(!P.length)return"";
+  const days=[...Array(N)].map((_,i)=>addD(td,i)),L=S.lang==="ar"?"ar":"en";
+  const fd=d=>new Date(d+"T00:00:00Z").toLocaleDateString(L,{day:"numeric",month:"short",timeZone:"UTC"});
+  const fw=d=>new Date(d+"T00:00:00Z").toLocaleDateString(L,{weekday:"short",day:"numeric",month:"short",timeZone:"UTC"});
+  const rows=P.map(x=>({n:x.p.name,ph:days.map(d=>phAt(x.c,d,td))}));
+  const ok=z=>z==="follicular"||z==="ovulatory",bad=z=>z==="menstrual"||z==="pms";
+  const st=days.map((_,i)=>lvl(rows.map(r=>r.ph[i])));
+  const band=(arr,col,lab)=>{const o=[];arr.forEach((k,i)=>{const l=o[o.length-1];if(l&&l.k===k)l.n++;else o.push({k,n:1,s:i})});return `<div class="band">${o.map(g=>`<i style="flex:${g.n};background:${col(g.k)}" title="${fd(days[g.s])} – ${fd(days[g.s+g.n-1])} · ${lab(g.k)}"></i>`).join("")}</div>`};
+  const ax=`<div class="ax">${[0,14,28].map(i=>`<span style="${S.lang==="ar"?"right":"left"}:${i/N*100}%">${i?fd(days[i]):t().home}</span>`).join("")}</div>`;
+  const seps=[14,28].map(i=>`<i class="sep" style="${S.lang==="ar"?"right":"left"}:${i/N*100}%"></i>`).join("");
+  const sh=k=>t().ph[k].split(" (")[0],oc=OC;
+  const lg=Object.keys(COL).map(k=>`<span class="lgd"><b style="background:${COL[k]}"></b>${sh(k)}</span>`).join("");
+  const rh=rows.map(r=>`<div class="who2">${esc(r.n)}</div>${band(r.ph,k=>COL[k],k=>t().ph[k])}`).join("");
+  const c1=`<div class="card"><h2>${t().dash}</h2><div class="tlw">${seps}${ax}${rh}</div><div class="lgs">${lg}</div>${P.length<S.people.length?`<div class="mu" style="margin-top:8px">${t().miss}</div>`:""}</div>`;
+  const runs=m=>{const w=[];for(let i=0;i<N;){if(st[i]>=m){let j=i;while(j+1<N&&st[j+1]>=m)j++;if(j>i)w.push([i,j]);i=j+1}else i++}return w};
+  const runsF=f=>{const w=[];for(let i=0;i<N;){if(f(st[i])){let j=i;while(j+1<N&&f(st[j+1]))j++;if(j>i)w.push([i,j]);i=j+1}else i++}return w};const calmR=runsF(v=>v===1),avoidR=runsF(v=>v===0);
+  const all=runs(3),most=runs(2).filter(([a,b])=>!all.some(([x,y])=>x<=b&&y>=a)),ln=(x,y)=>(y[1]-y[0])-(x[1]-x[0]);
+  const win=(a,b,k)=>{const off=k===2?rows.filter(r=>r.ph.slice(a,b+1).some(z=>!ok(z))).map(r=>esc(r.n)):[];return `<div class="win" style="border-color:${OC[k]}"><div class="n">${nf(b-a+1)}<small>${t().days}</small></div><div><b>${fw(days[a])} – ${fw(days[b])}</b><div class="mu">${[0,t().mixed,t().most,t().allOk][k]}${off.length?` · ${t().lessFor} ${off.join(", ")}`:""}</div></div></div>`};
+  const wl=[...all.sort(ln).slice(0,3).map(w=>[w[0],w[1],3]),...most.sort(ln).slice(0,2).map(w=>[w[0],w[1],2]),...calmR.sort(ln).slice(0,2).map(w=>[w[0],w[1],1])].sort((a,b)=>a[0]-b[0]).map(w=>win(w[0],w[1],w[2]));
+  const lg2=[[OC[3],t().allOk],[OC[2],t().most],[OC[1],t().mixed],[OC[0],t().caut]].map(x=>`<span class="lgd"><b style="background:${x[0]}"></b>${x[1]}</span>`).join("");
+  const c2=`<div class="card"><h2>🌿 ${t().best}</h2><div class="tlw">${seps}${ax}${band(st,k=>oc[k],k=>[t().caut,t().mixed,t().most,t().allOk][k])}</div><div class="lgs">${lg2}</div>${wl.length?wl.join(""):`<div class="mu" style="margin-top:10px">${t().noWin}</div>`}<div class="mu" style="margin-top:10px">${t().far}</div></div>`;
+  const avl=avoidR.sort(ln).slice(0,4).sort((a,b)=>a[0]-b[0]).map(([a,b])=>{const who=rows.map(r=>{const z=[...new Set(r.ph.slice(a,b+1).filter(bad))].map(sh);return z.length?esc(r.n)+" ("+z.join(" / ")+")":""}).filter(Boolean).join(", ");return `<div class="win" style="border-color:${OC[0]}"><div class="n">${nf(b-a+1)}<small>${t().days}</small></div><div><b>${fw(days[a])} – ${fw(days[b])}</b><div class="mu">${t().avoidWho} ${who}</div></div></div>`}).join("");
+  const c3=`<div class="card"><h2>⛔ ${t().avoidT}</h2>${avl||`<div class="mu">${t().noAvoid}</div>`}</div>`;
+  const kd=all.length?3:most.length?2:calmR.length?1:0,nx=([null,calmR,most,all][kd]||[]).slice().sort((a,b)=>a[0]-b[0])[0];
+  const tz=nx?`<div class="card tz" data-tab="plan"><span class="tzi">🌿</span><div><div class="mu">${t().nextWin}</div><b>${fw(days[nx[0]])} – ${fw(days[nx[1]])}</b> <span class="mu">· ${[0,t().mixed,t().most,t().allOk][kd]}</span></div></div>`:`<div class="card tz" data-tab="plan"><span class="tzi">🗓️</span><div class="mu">${t().noWinS}</div></div>`;
+  return {c1,c2,c3,tz}}
+const teaser=()=>{const d=dashParts();return d?d.tz:""};
+let calOff=0,calSel="all",calCtx=null;
+function phOn(c,iso,td){
+  const ps=c.ps;if(iso<ps[0].s)return null;let k=0;for(let i=0;i<ps.length;i++)if(ps[i].s<=iso)k=i;
+  const cls=(day,pe,cl)=>{const ov=ovOf(cl,pe);if(day<=pe)return"menstrual";if(day<ov-1)return"follicular";if(day<=ov+1)return"ovulatory";return day>cl-5?"pms":"luteal"};
+  const pe=ps[k].e?diff(ps[k].s,ps[k].e)+1:c.pl;
+  if(k<ps.length-1)return cls(diff(ps[k].s,iso)+1,pe,diff(ps[k].s,ps[k+1].s));
+  if(iso>=td)return phAt(c,iso,td);
+  return cls(Math.min(diff(ps[k].s,iso)+1,c.cl),pe,c.cl)}
+function calCard(){
+  const td=todayISO(),L=S.lang==="ar"?"ar":"en",P=S.people.map(p=>({p,c:calc(p)})).filter(x=>x.c);
+  if(!P.length)return"";calCtx={P,td,L};
+  if(calSel!=="all"&&!P.some(x=>x.p.id===calSel))calSel="all";
+  const now=new Date(td+"T00:00:00Z"),y0=now.getUTCFullYear(),m0=now.getUTCMonth()+calOff,first=new Date(Date.UTC(y0,m0,1)),dim=new Date(Date.UTC(y0,m0+1,0)).getUTCDate(),wd=first.getUTCDay();
+  const iso=d=>new Date(Date.UTC(y0,m0,d)).toISOString().slice(0,10),sel=calSel==="all"?null:P.find(x=>x.p.id===calSel);
+  const ok=z=>z==="follicular"||z==="ovulatory",oc=OC,sh=k=>t().ph[k].split(" (")[0];
+  const cell=d=>{const i=iso(d);let bg="",dot="",tc="";
+    if(sel){const z=phOn(sel.c,i,td);if(z)bg=`background:color-mix(in srgb,${COL[z]} 45%,transparent)`;if(sel.c.ps.some(x=>x.s===i||(x.e&&x.s<=i&&i<=x.e)))dot="<u></u>"}
+    else{const a=P.map(x=>phOn(x.c,i,td)).filter(Boolean);if(a.length){const lv=lvl(a);bg=`background:${OC[lv]}`;tc=";color:"+OT[lv]}}
+    return `<button class="cd${i===td?" tdy":""}" data-d="${i}" style="${bg}${tc}">${nf(d)}${dot}</button>`};
+  const ar=S.lang==="ar",wk=[...Array(7)].map((_,i)=>`<span>${new Date(Date.UTC(2023,0,1+i)).toLocaleDateString(L,{weekday:"narrow",timeZone:"UTC"})}</span>`).join("");
+  const chs=`<div class="chips" style="padding-bottom:10px"><button class="chip ${sel?"":"on"}" data-cs="all"><b class="ava" style="background:var(--ac)">👪</b>${t().fam}</button>${P.map(x=>`<button class="chip ${sel&&sel.p.id===x.p.id?"on":""}" data-cs="${x.p.id}"><b class="ava" style="background:${COL[x.c.ph]}">${esc([...x.p.name][0]||"?")}</b>${esc(x.p.name)}</button>`).join("")}</div>`;
+  const lg=sel?Object.keys(COL).map(k=>`<span class="lgd"><b style="background:${COL[k]}"></b>${sh(k)}</span>`).join("")+`<span class="lgd"><b style="background:var(--tx)"></b>${t().plog}</span>`:[[OC[3],t().allOk],[OC[2],t().most],[OC[1],t().mixed],[OC[0],t().caut]].map(x=>`<span class="lgd"><b style="background:${x[0]}"></b>${x[1]}</span>`).join("");
+  return `<div class="card"><h2>🗓️ ${t().calT}</h2>${chs}<div class="row sp" style="margin-bottom:10px"><button data-cm="-1">${ar?"›":"‹"}</button><b>${first.toLocaleDateString(L,{month:"long",year:"numeric",timeZone:"UTC"})}</b><button data-cm="1">${ar?"‹":"›"}</button></div><div class="cg">${wk}${"<span></span>".repeat(wd)}${[...Array(dim)].map((_,i)=>cell(i+1)).join("")}</div><div class="mu" id="cd2" style="margin-top:10px;min-height:22px"></div><div class="lgs">${lg}</div></div>`}
+function planV(){
+  const v=$("#v"),d=dashParts();
+  if(!d)return v.innerHTML=`<div class="card empty"><div style="font-size:44px">🗓️</div><p>${S.people.length?t().nolog:t().none}</p><button class="p" data-tab="${S.people.length?"log":"people"}">${S.people.length?t().log:t().people}</button></div>`;
+  v.innerHTML=d.c1+d.c2+d.c3+calCard();
+  const rr=()=>{const y=window.scrollY;render();window.scrollTo(0,y)};
+  document.querySelectorAll("[data-cm]").forEach(b=>b.onclick=()=>{calOff+=+b.dataset.cm;rr()});
+  document.querySelectorAll("[data-cs]").forEach(b=>b.onclick=()=>{calSel=b.dataset.cs;rr()});
+  document.querySelectorAll(".cd").forEach(b=>b.onclick=()=>{const i=b.dataset.d,{P,td,L}=calCtx,sh=k=>t().ph[k].split(" (")[0];
+    const day=new Date(i+"T00:00:00Z").toLocaleDateString(L,{weekday:"long",day:"numeric",month:"long",timeZone:"UTC"});
+    const pp=calSel==="all"?P:P.filter(x=>x.p.id===calSel),tx=pp.map(x=>{const z=phOn(x.c,i,td);return (calSel==="all"?esc(x.p.name)+": ":"")+(z?sh(z):t().nodata)}).join(" · ");
+    $("#cd2").innerHTML=`<b>${day}</b> · ${tx}`})}
+function banners(){
+  const b=S.people.some(p=>p.periods.length)&&(!S.lastBk||diff(S.lastBk,todayISO())>30)?`<div class="ban" data-tab="set" style="cursor:pointer">💾 ${t().bkWarn}</div>`:"";
+  return (storeOK?"":`<div class="ban">⚠ ${t().noStore}</div>`)+b+alerts().map(m=>`<div class="ban">🔔 ${esc(m)}</div>`).join("")}
+function alerts(){
+  const out=[];S.people.forEach(p=>{const c=calc(p);if(!c)return;
+    if(c.ph==="pms")out.push(`${p.name} ${t().pmsMsg}`);
+    if(c.to>=0&&c.to<=2)out.push(`${p.name}: ${t().perMsg} ${nf(c.to)} ${t().days}`)});return out}
+function check(){
+  if(!unlocked||!S.remind)return;const td=todayISO();
+  S.people.forEach(p=>{const c=calc(p);if(!c)return;const k=p.id+td;
+    const msgs=[];if(c.ph==="pms")msgs.push(`${p.name} ${t().pmsMsg}`);if(c.to>=0&&c.to<=2)msgs.push(`${p.name}: ${t().perMsg} ${nf(c.to)} ${t().days}`);
+    if(msgs.length&&!S.notified[k]){S.notified[k]=1;save();try{if(window.Notification&&Notification.permission==="granted")new Notification(t().notifT,{body:t().notifB})}catch(e){}}})}
+function logV(){
+  const v=$("#v"),p=S.people.find(x=>x.id===S.sel);if(!p)return v.innerHTML=`<div class="card">${t().none}</div>`;
+  const ps=[...p.periods].sort((a,b)=>a.s<b.s?1:-1);
+  v.innerHTML=`<div class="card"><h2>${esc(p.name)}</h2><label>${t().start}</label><input type="date" id="ds" max="${todayISO()}"><label>${t().end}</label><input type="date" id="de" max="${todayISO()}"><p><button class="p" id="sv">${t().save}</button></p></div>
+  <div class="card"><h2>${t().hist}</h2><table>${ps.map(x=>`<tr><td>${x.s}</td><td>${x.e||"—"}</td><td><button class="g" data-rm="${x.s}">✕</button></td></tr>`).join("")}</table></div>`;
+  $("#sv").onclick=()=>{const s=$("#ds").value,e=$("#de").value;if(!s||(e&&e<s))return;
+    const ex=p.periods.find(x=>x.s===s);if(ex)ex.e=e||ex.e;else p.periods.push({s,e:e||""});save();render()};
+  v.querySelectorAll("[data-rm]").forEach(b=>b.onclick=()=>{p.periods=p.periods.filter(x=>x.s!==b.dataset.rm);save();render()})}
+const ask=(b,lb,fn)=>{if(b.dataset.arm)return fn();b.dataset.arm="1";const o=b.textContent;b.textContent=lb;b.style.color="var(--c1)";setTimeout(()=>{b.dataset.arm="";b.textContent=o;b.style.color=""},4000)};
+function peopleV(){
+  $("#v").innerHTML=`<div class="card"><h2>${t().add}</h2><label>${t().name}</label><input id="nm"><label>${t().dob}</label><input type="date" id="bd" max="${todayISO()}"><p><button class="p" id="ad">${t().add}</button></p></div>`+
+  S.people.map(p=>`<div class="card row sp"><span class="row"><b class="ava" style="background:var(--ac)">${esc([...p.name][0]||"?")}</b><span>${esc(p.name)}<br><span class="mu">${p.dob||""}</span></span></span><button class="g" data-del="${p.id}">${t().del}</button></div>`).join("");
+  $("#ad").onclick=()=>{const n=$("#nm").value.trim();if(!n)return;const id="p"+Date.now();S.people.push({id,name:n,dob:$("#bd").value,periods:[]});S.sel=id;save();tab="log";render()};
+  document.querySelectorAll("[data-del]").forEach(b=>b.onclick=()=>ask(b,t().sure,()=>{S.people=S.people.filter(x=>x.id!==b.dataset.del);if(S.sel===b.dataset.del)S.sel=S.people[0]?S.people[0].id:null;save();render()}))}
+let bkMsg="";
+const msg=x=>{bkMsg=x;const e=$("#bm");if(e)e.textContent=x};
+const bkData=()=>JSON.stringify({app:"fcs",v:1,exported:new Date().toISOString(),lang:S.lang,remind:S.remind,people:S.people},null,1);
+async function doExport(){
+  try{if(!window.claude){const b=new Blob([bkData()],{type:"application/json"}),a=document.createElement("a");a.href=URL.createObjectURL(b);a.download="cycle-backup-"+todayISO()+".json";document.body.appendChild(a);a.click();setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove()},1000);S.lastBk=todayISO();save();bkMsg=t().done;setV();toast(t().done);return}
+    const d=window.claude.use?await window.claude.use("downloads"):null;if(!d)return msg(t().unav);
+    await d.save({filename:"cycle-backup-"+todayISO()+".json",data:bkData()});S.lastBk=todayISO();save();bkMsg=t().done;setV();toast(t().done)}
+  catch(e){if(!e||e.code!=="declined")msg(t().unav)}}
+const toast=x=>{const e=document.createElement("div");e.className="toast";e.textContent=x;document.body.appendChild(e);setTimeout(()=>e.remove(),4500)};
+function applyBk(txt){
+  try{if(txt.length>1e6)throw 0;const o=JSON.parse(txt),D=/^\d{4}-\d{2}-\d{2}$/;if(!o||o.app!=="fcs"||!Array.isArray(o.people))throw 0;
+    o.people.forEach(p=>{if(!p||!p.id||!p.name||!Array.isArray(p.periods))throw 0});
+    const ppl=cleanPeople(o.people);if(o.people.length&&!ppl.length)throw 0;
+    const el=$("#bp");if(!el)return;
+    el.innerHTML=`<div class="card" style="margin:10px 0 0;border-color:var(--ac)"><h3>${t().prev}</h3><ul>${ppl.map(p=>`<li>${esc(p.name)} · ${nf(p.periods.length)} ${t().pers}</li>`).join("")}</ul><div class="mu">${t().replaces}</div><div class="row" style="margin-top:10px"><button class="p" id="by">${t().restNow}</button><button id="bn">${t().cancel}</button></div></div>`;
+    $("#bn").onclick=()=>{el.innerHTML="";msg("")};
+    $("#by").onclick=()=>{S.people=ppl;S.sel=ppl[0]?ppl[0].id:null;if(typeof o.remind==="boolean")S.remind=o.remind;save();bkMsg="";render();toast("✓ "+t().okRestore+" · "+nf(ppl.length)+" "+t().ppl)};
+    msg(t().staged);el.scrollIntoView({block:"nearest"})}
+  catch(e){msg(t().badFile+(e&&e.message?" – "+e.message:""))}}
+function setV(){
+  $("#v").innerHTML=`<div class="card"><h2>${t().rem}</h2><label style="display:flex;gap:8px;align-items:center;color:var(--tx)"><input type="checkbox" id="rm" style="width:auto" ${S.remind?"checked":""}> ${t().remOn}</label><p class="mu">${t().remNote}</p></div>
+  <div class="card"><h2>💾 ${t().bk}</h2><p class="mu">${t().bkNote}</p><div class="row"><button class="p" id="bx">${t().exp}</button><button id="bc">${t().cpy}</button></div><textarea id="bt" rows="4" readonly style="display:none;margin-top:8px"></textarea><label>${t().restFile}</label><input type="file" id="bf"><label>${t().restTxt}</label><textarea id="br" rows="3"></textarea><p><button id="bg">${t().restGo}</button></p><div id="bp"></div><div class="mu" id="bm">${esc(bkMsg)}</div><div class="mu">${t().last}: ${S.lastBk||t().never}</div></div>
+  <div class="card row"><button id="cp">${t().chgPin}</button><button id="lk">${t().lockNow}</button></div>`;
+  $("#rm").onchange=async e=>{S.remind=e.target.checked;save();if(S.remind){try{if(window.Notification&&Notification.permission==="default")await Notification.requestPermission()}catch(x){}check()}};
+  $("#lk").onclick=()=>{unlocked=false;render()};
+  $("#bx").onclick=doExport;
+  $("#bc").onclick=async()=>{const x=$("#bt");x.value=bkData();x.style.display="block";x.select();try{await navigator.clipboard.writeText(x.value);S.lastBk=todayISO();save();msg(t().copied);toast(t().copied)}catch(e){msg(t().sel)}};
+  $("#bf").onchange=e=>{const i=e.target,f=i.files&&i.files[0];if(!f)return msg(t().noFile);if(f.size>1e6){i.value="";return msg(t().badFile)}msg(t().reading+" "+f.name);const r=new FileReader();r.onload=()=>{applyBk(String(r.result).replace(/^\uFEFF/,"").trim());i.value=""};r.onerror=()=>{msg(t().badFile);i.value=""};r.readAsText(f)};
+  $("#bg").onclick=()=>applyBk($("#br").value.trim());$("#cp").onclick=()=>{chgPin=true;render()}}
+function bind(){
+  document.querySelectorAll("[data-tab]").forEach(b=>b.onclick=()=>{tab=b.dataset.tab;render()});
+  const l=$("#lg");if(l)l.onclick=()=>{S.lang=S.lang==="en"?"ar":"en";save();render()};
+  document.querySelectorAll("[data-pick]").forEach(b=>b.onclick=()=>{S.sel=b.dataset.pick;save();render()})}
+load();S.people=cleanPeople(S.people);if(S.sel&&!S.people.some(p=>p.id===S.sel))S.sel=null;if(!S.sel&&S.people[0])S.sel=S.people[0].id;render();setInterval(check,18e5);
+let hiddenAt=0;document.addEventListener("visibilitychange",()=>{document.documentElement.classList.toggle("priv",document.hidden);if(document.hidden)hiddenAt=Date.now();else if(unlocked&&S.pin&&S.pin!=="demo"&&hiddenAt&&Date.now()-hiddenAt>60000){unlocked=false;render()}});
+if("serviceWorker"in navigator)window.addEventListener("load",()=>navigator.serviceWorker.register("sw.js").catch(()=>{}));
+</script>
+</body>
+</html>
